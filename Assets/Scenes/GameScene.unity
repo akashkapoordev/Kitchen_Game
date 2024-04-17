@@ -161,6 +161,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 7
   gameInput: {fileID: 1292141110}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &531810270
 Transform:
   m_ObjectHideFlags: 0
@@ -348,7 +351,7 @@ PrefabInstance:
     - target: {fileID: 7329173214347037275, guid: a7a7e743c999ed6919e572f5ad9cdd63,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.86
+      value: -5.07
       objectReference: {fileID: 0}
     - target: {fileID: 7329173214347037275, guid: a7a7e743c999ed6919e572f5ad9cdd63,
         type: 3}

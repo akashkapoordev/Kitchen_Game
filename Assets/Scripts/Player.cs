@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,38 @@ public class Player : MonoBehaviour{
    private Vector3 lastInteractDirection;
    
    bool isWalking;
+   private void Start() {
+        gameInput.OnInteractAction += GameInput_OnInteractAction;
+    }
+
+private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
+    Vector2 inputVector = gameInput.GetMovementNormalized();
+
+    Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
+
+    // Set the interaction direction to a default if the player is not moving
+    if (moveDir == Vector3.zero) {
+        // Check if there's a previously set direction, else set to facing forward
+        if (lastInteractDirection == Vector3.zero) {
+            lastInteractDirection = transform.forward; // Assumes the player has a default forward direction
+        }
+    } else {
+        lastInteractDirection = moveDir;
+    }
+
+    float interactDistance = 2f;
+    if (Physics.Raycast(transform.position, lastInteractDirection, out RaycastHit raycastHit, interactDistance, layerMask)) {
+        if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
+            // Has ClearCounter
+            clearCounter.Interact();
+        }
+    }
+}
+
+
     private void Update() {
         HandleMovement();
-        HandleInteractions();
+        //HandleInteractions();
      
     }
 
