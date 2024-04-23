@@ -9,4 +9,6 @@ public class ClearCounter : MonoBehaviour
     {
         Debug.Log("Interact!");
     }
+
+
 }

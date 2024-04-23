@@ -7,9 +7,10 @@ public class Player : MonoBehaviour{
    
    [SerializeField] private float moveSpeed = 7f;
    [SerializeField] private GameInput gameInput;
-   [SerializeField] private LayerMask layerMask;
+   [SerializeField] private LayerMask countersLayerMask;
 
    private Vector3 lastInteractDirection;
+   private ClearCounter selectedCounter;
    
    bool isWalking;
    private void Start() {
@@ -17,55 +18,90 @@ public class Player : MonoBehaviour{
     }
 
 private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
-    Vector2 inputVector = gameInput.GetMovementNormalized();
 
-    Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
-    // Set the interaction direction to a default if the player is not moving
-    if (moveDir == Vector3.zero) {
-        // Check if there's a previously set direction, else set to facing forward
-        if (lastInteractDirection == Vector3.zero) {
-            lastInteractDirection = transform.forward; // Assumes the player has a default forward direction
-        }
-    } else {
-        lastInteractDirection = moveDir;
-    }
-
-    float interactDistance = 2f;
-    if (Physics.Raycast(transform.position, lastInteractDirection, out RaycastHit raycastHit, interactDistance, layerMask)) {
-        if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
-            // Has ClearCounter
-            clearCounter.Interact();
-        }
+    if(selectedCounter != null)
+    {
+        selectedCounter.Interact();
     }
 }
 
 
     private void Update() {
         HandleMovement();
-        //HandleInteractions();
+        HandleInteractions();
      
     }
 
-    public void HandleInteractions()
+    
+            public void HandleInteractions()
     {
         Vector2 inputVector = gameInput.GetMovementNormalized();
-        Vector3 moveDir = new Vector3(inputVector.x,0,inputVector.y);
-
+        Vector3 moveDir = new Vector3(inputVector.x,0f,inputVector.y);
+        
         if(moveDir != Vector3.zero)
         {
+            //Debug.Log("moveDir: " + moveDir);
             lastInteractDirection = moveDir;
         }
 
         float ineractionDistance = 2f;
-        if(Physics.Raycast(transform.position,lastInteractDirection,out RaycastHit hitInfo,ineractionDistance,layerMask))
+        //Debug.Log("lastInteraction: " + lastInteractDirection);
+        if(Physics.Raycast(transform.position,lastInteractDirection,out RaycastHit hitInfo,ineractionDistance,countersLayerMask))
         {
             if(hitInfo.transform.TryGetComponent(out ClearCounter clearCounter))
             {
-                clearCounter.Interact();
+                if(clearCounter != selectedCounter)
+                {
+
+                    selectedCounter = clearCounter;
+                }
             }
+            else
+            {
+                //Debug.Log("first Null");
+
+                selectedCounter = null;
+            }
+            
         }
+        else
+            {
+                selectedCounter = null;
+                
+            }
+        
     }
+
+
+
+    //     private void HandleInteractions() {
+    //     Vector2 inputVector = gameInput.GetMovementNormalized();
+
+    //     Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
+
+    //     if (moveDir != Vector3.zero) {
+    //         lastInteractDirection = moveDir;
+    //     }
+
+    //     float interactDistance = 2f;
+    //     if (Physics.Raycast(transform.position, lastInteractDirection, out RaycastHit raycastHit, interactDistance, countersLayerMask)) {
+    //         if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
+    //             // Has ClearCounter
+    //             if (clearCounter != selectedCounter) {
+    //                 selectedCounter = clearCounter;
+    //             }
+    //         } else {
+    //             selectedCounter = null;
+
+    //         }
+    //     } else {
+    //         selectedCounter = null;
+    //     }
+    //     Debug.Log(selectedCounter);
+        
+    // }
+
 
     public void HandleMovement()
     {
