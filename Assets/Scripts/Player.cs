@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour{
    
+    public static Player Instance{get; private set;}
+   public event EventHandler<OnSelectionChangeEventArgs> OnSelectedCounterChange;
+   public class   OnSelectionChangeEventArgs : EventArgs
+   {
+        public ClearCounter selectedCounter;
+   }
+   
    [SerializeField] private float moveSpeed = 7f;
    [SerializeField] private GameInput gameInput;
    [SerializeField] private LayerMask countersLayerMask;
@@ -13,6 +20,15 @@ public class Player : MonoBehaviour{
    private ClearCounter selectedCounter;
    
    bool isWalking;
+
+   void Awake()
+   {
+        if(Instance!=null)
+        {
+            Debug.LogError("There are more the one player");
+        }
+        Instance = this;
+   }
    private void Start() {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
     }
@@ -54,53 +70,25 @@ private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
                 if(clearCounter != selectedCounter)
                 {
 
-                    selectedCounter = clearCounter;
+                    SetSelectedCounter(clearCounter);
+
                 }
             }
             else
             {
                 //Debug.Log("first Null");
 
-                selectedCounter = null;
+                SetSelectedCounter(null);
             }
             
         }
         else
             {
-                selectedCounter = null;
-                
+                SetSelectedCounter(null);
             }
         
     }
 
-
-
-    //     private void HandleInteractions() {
-    //     Vector2 inputVector = gameInput.GetMovementNormalized();
-
-    //     Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
-
-    //     if (moveDir != Vector3.zero) {
-    //         lastInteractDirection = moveDir;
-    //     }
-
-    //     float interactDistance = 2f;
-    //     if (Physics.Raycast(transform.position, lastInteractDirection, out RaycastHit raycastHit, interactDistance, countersLayerMask)) {
-    //         if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)) {
-    //             // Has ClearCounter
-    //             if (clearCounter != selectedCounter) {
-    //                 selectedCounter = clearCounter;
-    //             }
-    //         } else {
-    //             selectedCounter = null;
-
-    //         }
-    //     } else {
-    //         selectedCounter = null;
-    //     }
-    //     Debug.Log(selectedCounter);
-        
-    // }
 
 
     public void HandleMovement()
@@ -144,6 +132,16 @@ private void GameInput_OnInteractAction(object sender, System.EventArgs e) {
         isWalking = moveDir != Vector3.zero;
         float rotateSpeed = 10f;
         transform.forward = Vector3.Slerp(transform.forward,moveDir,Time.deltaTime * rotateSpeed);
+    }
+
+
+    private void SetSelectedCounter(ClearCounter selectedCounter)
+    {
+        this.selectedCounter = selectedCounter;
+        OnSelectedCounterChange?.Invoke(this,new OnSelectionChangeEventArgs
+        {
+            selectedCounter = selectedCounter
+        });
     }
 
 
