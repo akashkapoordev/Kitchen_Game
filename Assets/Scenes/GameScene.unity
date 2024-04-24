@@ -124,6 +124,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &80247126 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5530062812636906127, guid: a7a7e743c999ed6919e572f5ad9cdd63,
+    type: 3}
+  m_PrefabInstance: {fileID: 685062913}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &204061085 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3294758251327466532, guid: 1c5dda3c7cd3cf742afcade5419faeab,
@@ -348,6 +354,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClearCounter (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5468658709398777384, guid: a7a7e743c999ed6919e572f5ad9cdd63,
+        type: 3}
+      propertyPath: counterTopPoint
+      value: 
+      objectReference: {fileID: 80247126}
+    - target: {fileID: 5468658709398777384, guid: a7a7e743c999ed6919e572f5ad9cdd63,
+        type: 3}
+      propertyPath: kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 839d7a7fd1c9bbfaeb615205079e9702,
+        type: 2}
     - target: {fileID: 7329173214347037275, guid: a7a7e743c999ed6919e572f5ad9cdd63,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1057,6 +1074,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 771453745}
   m_SourcePrefab: {fileID: 100100000, guid: 1c5dda3c7cd3cf742afcade5419faeab, type: 3}
+--- !u!4 &1922759965 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5530062812636906127, guid: a7a7e743c999ed6919e572f5ad9cdd63,
+    type: 3}
+  m_PrefabInstance: {fileID: 193463159002519020}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &193463159002519020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1070,6 +1093,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClearCounter
       objectReference: {fileID: 0}
+    - target: {fileID: 5468658709398777384, guid: a7a7e743c999ed6919e572f5ad9cdd63,
+        type: 3}
+      propertyPath: counterTopPoint
+      value: 
+      objectReference: {fileID: 1922759965}
+    - target: {fileID: 5468658709398777384, guid: a7a7e743c999ed6919e572f5ad9cdd63,
+        type: 3}
+      propertyPath: kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: b4531a4adcf71712fb5deb70ca4ca96f,
+        type: 2}
     - target: {fileID: 7329173214347037275, guid: a7a7e743c999ed6919e572f5ad9cdd63,
         type: 3}
       propertyPath: m_LocalPosition.x
